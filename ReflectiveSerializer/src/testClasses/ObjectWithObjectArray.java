@@ -1,7 +1,7 @@
 package testClasses;
 
 public class ObjectWithObjectArray {
-	SimpleObject[] array;
+	private SimpleObject[] array;
 	
 	public ObjectWithObjectArray(SimpleObject[] array)
 	{

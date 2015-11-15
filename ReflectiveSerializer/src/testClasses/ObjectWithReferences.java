@@ -2,7 +2,7 @@ package testClasses;
 
 public class ObjectWithReferences {
 
-	SimpleObject firstField, secondField, thirdField;
+	private SimpleObject firstField, secondField, thirdField;
 	
 	public ObjectWithReferences(SimpleObject firstField, SimpleObject secondField, SimpleObject thirdField)
 	{

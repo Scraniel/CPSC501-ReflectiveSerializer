@@ -2,7 +2,7 @@ package testClasses;
 
 public class CircularNode {
 
-	int identifier;
+	private int identifier;
 	public CircularNode next;
 	
 	public CircularNode(int value)

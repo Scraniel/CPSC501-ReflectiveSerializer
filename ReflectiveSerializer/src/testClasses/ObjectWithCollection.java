@@ -3,7 +3,7 @@ package testClasses;
 import java.util.ArrayList;
 
 public class ObjectWithCollection {
-	ArrayList<SimpleObject> list;
+	private ArrayList<SimpleObject> list;
 	
 	public ObjectWithCollection(ArrayList<SimpleObject> list)
 	{

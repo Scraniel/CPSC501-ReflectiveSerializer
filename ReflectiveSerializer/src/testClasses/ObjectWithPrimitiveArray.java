@@ -1,10 +1,10 @@
 package testClasses;
 
-public class ObjectWithPrimativeArray {
+public class ObjectWithPrimitiveArray {
 
-	int[] array;
+	private int[] array;
 	
-	public ObjectWithPrimativeArray(int[] array)
+	public ObjectWithPrimitiveArray(int[] array)
 	{
 		this.array = array;
 	}

@@ -2,10 +2,10 @@ package testClasses;
 
 public class SimpleObject {
 
-	int intField;
-	double doubleField;
-	char charField;
-	boolean booleanField;
+	private int intField;
+	private double doubleField;
+	private char charField;
+	private boolean booleanField;
 	
 	public SimpleObject(int intField, double doubleField, char charField, boolean booleanField)
 	{

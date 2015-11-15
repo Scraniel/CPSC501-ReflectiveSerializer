@@ -81,9 +81,9 @@ public class ObjectCreator {
 		return first;
 	}	
 	
-	private static ObjectWithPrimativeArray createObjectWithPrimativeArray()
+	private static ObjectWithPrimitiveArray createObjectWithPrimativeArray()
 	{
-		ObjectWithPrimativeArray newObject;
+		ObjectWithPrimitiveArray newObject;
 		int [] array;
 		
 		System.out.println("This object contains an array of integers.");
@@ -96,7 +96,7 @@ public class ObjectCreator {
 			array[i] = Integer.parseInt(in.nextLine());
 		}
 		
-		newObject = new ObjectWithPrimativeArray(array);
+		newObject = new ObjectWithPrimitiveArray(array);
 		
 		System.out.println("Your object looks like: " + newObject);
 		
