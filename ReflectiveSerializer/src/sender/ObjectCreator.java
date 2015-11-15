@@ -1,7 +1,13 @@
 package sender;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
 import testClasses.*;
 
 public class ObjectCreator {
@@ -10,7 +16,49 @@ public class ObjectCreator {
 	
 	public static void main(String[] args)
 	{
-		// TODO: Make a menu for the user!
+		System.out.println("This program will serialize an object of your choice, then send it to another"
+				+ " computer and deserialize it. \n");
+		System.out.println("What type of object would you like to serialize?\n"
+				+ "1. A simple object with primitive fields\n"
+				+ "2. An object with fields that contain object references\n"
+				+ "3. An object with fields that contain circular object references (ie. objects connected in a graph)\n"
+				+ "4. An objct with a reference to an array of primitives\n"
+				+ "5. An object with a references to an array of object references\n"
+				+ "Selection:  ");
+		
+		Object selection = null;
+		
+		switch(in.nextLine().charAt(0))
+		{
+		case '1':
+			selection = createSimpleObject();
+			break;
+		case '2':
+			selection = createObjectWithReferences();
+			break;
+		case '3':
+			selection = createCircularNodes();
+			break;
+		case '4':
+			selection = createObjectWithPrimitiveArray();
+			break;
+		case'5':
+			selection = createObjectWithObjectArray();
+			break;
+		}
+		
+		
+		Document doc = new Serializer().serialize(selection);
+		
+		// HERE'S WHERE YOU ADD THE NETWORK CONNECTION / OUTPUT
+		XMLOutputter outputter = new XMLOutputter();
+		outputter.setFormat(Format.getPrettyFormat());
+		try {
+			outputter.output(doc, System.out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private static SimpleObject createSimpleObject()
@@ -21,7 +69,7 @@ public class ObjectCreator {
 		char charField;
 		boolean booleanField;
 		
-		System.out.println("This simple object has 4 different primative fields: int, double, char, and boolean.");
+		System.out.println("This simple object has 4 different primitive fields: int, double, char, and boolean.");
 		System.out.println("Please enter a value for the int field: ");
 		intField = Integer.parseInt(in.nextLine());
 		System.out.println("Please enter a value for the double field: ");
@@ -81,7 +129,7 @@ public class ObjectCreator {
 		return first;
 	}	
 	
-	private static ObjectWithPrimitiveArray createObjectWithPrimativeArray()
+	private static ObjectWithPrimitiveArray createObjectWithPrimitiveArray()
 	{
 		ObjectWithPrimitiveArray newObject;
 		int [] array;
