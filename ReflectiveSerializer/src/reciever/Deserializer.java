@@ -37,17 +37,11 @@ public class Deserializer implements ReflectiveDeserializer {
 			deserialized.put(id, instance);
 		}
 		
-		List<Element> fields, values;
-		Class declaringClass;
+
 		Class readingIn = null;
-		Field currentField;
-		String fieldName, fieldValue;
-		Element currentValueOrReference;
+
 		for(Element loadFrom : toDeserialize)
 		{
-			id = loadFrom.getAttributeValue("id");
-			instance = deserialized.get(id);
-			fields = loadFrom.getChildren();
 			
 			try {
 				readingIn = Class.forName(loadFrom.getAttributeValue("class"));
@@ -58,50 +52,77 @@ public class Deserializer implements ReflectiveDeserializer {
 			
 			if(readingIn.isArray())
 			{
-				Class componentType = readingIn.getComponentType();
-				int length = Integer.parseInt(loadFrom.getAttributeValue("length"));
-				for(int i = 0; i < length; i++)
-				{
-					currentValueOrReference = fields.get(i);
-					fieldValue = currentValueOrReference.getText();
-					
-					if(currentValueOrReference.getName().compareTo("value") == 0)
-						Array.set(instance, i, toObject(componentType, fieldValue));
-					else
-						Array.set(instance, i, deserialized.get(fieldValue));
-				}
+				fillArray(readingIn, loadFrom);
 			}
 			else
 			{					
-				try 
-				{		
-					for(Element fieldToLoad : fields)
-					{
-						declaringClass = Class.forName(fieldToLoad.getAttributeValue("declaringClass")); 			
-						fieldName = fieldToLoad.getAttributeValue("name");
-						currentField = declaringClass.getDeclaredField(fieldName);
-						values = fieldToLoad.getChildren();
-						currentValueOrReference = values.get(0);
-						currentField.setAccessible(true);
-						fieldValue = currentValueOrReference.getText();
-						
-						if(values.isEmpty())
-							return null;
-						else if(currentValueOrReference.getName().compareTo("value") == 0)
-							currentField.set(instance, toObject(currentField.getType(), fieldValue));
-						else
-							currentField.set(instance, deserialized.get(fieldValue));
-					}
-				}
-				catch (Exception e) 
-				{
-					e.printStackTrace();
-					return null;
-				}
+				fillObject(loadFrom);
 			}
 		}
 		
 		return deserialized.get("0");
+	}
+	
+	private void fillArray(Class readingIn, Element loadFrom)
+	{
+		String id = loadFrom.getAttributeValue("id");
+		Object instance = deserialized.get(id);
+		List<Element> fields = loadFrom.getChildren();
+		
+		Element currentValueOrReference;
+		String value;
+		
+		Class componentType = readingIn.getComponentType();
+		int length = Integer.parseInt(loadFrom.getAttributeValue("length"));
+		for(int i = 0; i < length; i++)
+		{
+			currentValueOrReference = fields.get(i);
+			value = currentValueOrReference.getText();
+			
+			if(currentValueOrReference.getName().compareTo("value") == 0)
+				Array.set(instance, i, toObject(componentType, value));
+			else
+				Array.set(instance, i, deserialized.get(value));
+		}
+	}
+	
+	private void fillObject(Element loadFrom)
+	{
+		String id = loadFrom.getAttributeValue("id");
+		Object instance = deserialized.get(id);
+		List<Element> fields = loadFrom.getChildren();
+		
+		List<Element> values;
+		Class declaringClass;
+		Field currentField;
+		String fieldName, fieldValue;
+		Element currentValueOrReference;
+		
+		try 
+		{		
+			for(Element fieldToLoad : fields)
+			{
+				declaringClass = Class.forName(fieldToLoad.getAttributeValue("declaringClass")); 			
+				fieldName = fieldToLoad.getAttributeValue("name");
+				currentField = declaringClass.getDeclaredField(fieldName);
+				values = fieldToLoad.getChildren();
+				currentValueOrReference = values.get(0);
+				currentField.setAccessible(true);
+				fieldValue = currentValueOrReference.getText();
+				
+				if(values.isEmpty())
+					return;
+				else if(currentValueOrReference.getName().compareTo("value") == 0)
+					currentField.set(instance, toObject(currentField.getType(), fieldValue));
+				else
+					currentField.set(instance, deserialized.get(fieldValue));
+			}
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return;
+		}
 	}
 	
 	private Class loadClass(Element loadFrom)
