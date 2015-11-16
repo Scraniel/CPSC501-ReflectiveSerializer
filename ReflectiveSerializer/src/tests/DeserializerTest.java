@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
@@ -14,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import reciever.Deserializer;
-import sender.Serializer;
 import testClasses.CircularNode;
 import testClasses.ObjectWithCollection;
 import testClasses.ObjectWithObjectArray;
