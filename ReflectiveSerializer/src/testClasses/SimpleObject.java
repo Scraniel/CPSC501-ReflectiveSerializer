@@ -28,4 +28,18 @@ public class SimpleObject {
 	{
 		return "int: " + intField + " double:" + doubleField + " char:" + charField + " boolean:" + booleanField;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(!(o instanceof SimpleObject))
+			return false;
+		
+		boolean result = ((SimpleObject)o).intField == this.intField;
+		result = result && ((SimpleObject)o).doubleField == this.doubleField;
+		result = result && ((SimpleObject)o).charField == this.charField;
+		result = result && ((SimpleObject)o).booleanField == this.booleanField;
+		
+		return result;
+	}
 }

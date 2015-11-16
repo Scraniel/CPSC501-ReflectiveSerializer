@@ -31,4 +31,14 @@ public class ObjectWithCollection {
 		
 		return value;
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(!(o instanceof ObjectWithCollection))
+			return false;
+		
+		return ((ObjectWithCollection)o).list.equals(this.list);
+
+	}
 }

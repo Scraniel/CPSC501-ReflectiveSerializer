@@ -1,5 +1,7 @@
 package testClasses;
 
+import java.util.Arrays;
+
 public class ObjectWithPrimitiveArray {
 
 	private int[] array;
@@ -31,4 +33,13 @@ public class ObjectWithPrimitiveArray {
 		
 	}
 	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(!(o instanceof ObjectWithPrimitiveArray))
+			return false;
+		
+		return Arrays.equals(((ObjectWithPrimitiveArray)o).array, this.array);
+
+	}
 }

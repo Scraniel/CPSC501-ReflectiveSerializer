@@ -1,5 +1,7 @@
 package testClasses;
 
+import java.util.Arrays;
+
 public class ObjectWithObjectArray {
 	private SimpleObject[] array;
 	
@@ -28,5 +30,15 @@ public class ObjectWithObjectArray {
 		
 		return value;
 		
+	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(!(o instanceof ObjectWithObjectArray))
+			return false;
+		
+		return Arrays.equals(((ObjectWithObjectArray)o).array, this.array);
+
 	}
 }

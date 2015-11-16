@@ -20,4 +20,25 @@ public class CircularNode {
 	{
 		return "Chain:" + identifier + "->" + next.identifier + "->" + next.next.identifier + "->" + next.next.next.identifier; 
 	}
+	
+	@Override
+	public boolean equals(Object o)
+	{
+		if(!(o instanceof CircularNode))
+			return false;
+		
+		boolean result = true;
+		
+		CircularNode current = this;
+		CircularNode next = this.next;
+		
+		while(next != this)
+		{
+			result = result && ((CircularNode)o).identifier == this.identifier;
+			current = next;
+			next = next.next;		
+		}	
+		
+		return result;
+	}
 }

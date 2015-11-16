@@ -31,59 +31,6 @@ public class Serializer implements ReflectiveSerializer {
 		currentID = 0;
 	}
 	
-	// Will be moved into unit tests
-	public static void main(String[] args)
-	{
-		Serializer serializer = new Serializer();
-		XMLOutputter outputter = new XMLOutputter();
-		
-		// Simple Objects
-		SimpleObject first, second, third;
-		first = new SimpleObject(0,0.0,'c', true);
-		second = new SimpleObject(1,1.1,'h', false);
-		third = new SimpleObject(2,2.2,'a', true);
-		
-		// Object with references
-		ObjectWithReferences instance = new ObjectWithReferences(first, second, third);
-		
-		// Circular references (1 -> 2 -> 3 -> 1)
-		CircularNode one, two, three;
-		one = new CircularNode(1);
-		two = new CircularNode(2);
-		three = new CircularNode(3);
-		one.next = two;
-		two.next = three;
-		three.next = one;
-		
-		// Collection holding things
-		ArrayList<SimpleObject> list = new ArrayList<SimpleObject>();
-		list.add(first);
-		list.add(second);
-		list.add(third);
-		
-		// Primitive array
-		ObjectWithPrimitiveArray pArray = new ObjectWithPrimitiveArray(new int[]{1,2,3,4,5});
-		
-		// with collection
-		ObjectWithCollection col = new ObjectWithCollection(list);
-		
-		// object array
-		ObjectWithObjectArray oArray = new ObjectWithObjectArray(new SimpleObject[]{first, second, third});
-		
-		Document doc = serializer.serialize(pArray);
-		outputter.setFormat(Format.getPrettyFormat());
-		try {
-			outputter.output(doc, System.out);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Deserializer deserializer = new Deserializer();
-		Object deserialized = deserializer.deserialize(doc);
-		System.out.println(deserialized);
-	}
-	
 	@Override
 	public Document serialize(Object obj) {
 		
