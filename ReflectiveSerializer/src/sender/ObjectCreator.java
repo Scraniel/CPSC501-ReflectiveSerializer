@@ -9,6 +9,7 @@ import org.jdom2.Document;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import objectInspector.*;
 import testClasses.*;
 
 public class ObjectCreator {
@@ -19,12 +20,13 @@ public class ObjectCreator {
 	{
 		System.out.println("This program will serialize an object of your choice, then send it to another"
 				+ " computer and deserialize it. \n");
-		System.out.println("What type of object would you like to serialize?\n"
+		System.out.print("What type of object would you like to serialize?\n"
 				+ "1. A simple object with primitive fields\n"
 				+ "2. An object with fields that contain object references\n"
 				+ "3. An object with fields that contain circular object references (ie. objects connected in a graph)\n"
 				+ "4. An object with a reference to an array of primitives\n"
 				+ "5. An object with a reference to an array of object references\n"
+				+ "6. An object with a reference to a Java Collection of objects\n"
 				+ "Selection:  ");
 		
 		Object selection = null;
@@ -46,6 +48,8 @@ public class ObjectCreator {
 		case'5':
 			selection = createObjectWithObjectArray();
 			break;
+		case '6':
+			selection = createObjectWithCollection();
 		}
 		
 		
@@ -57,9 +61,18 @@ public class ObjectCreator {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		try {
 			outputter.output(doc, stream);
+			
+			System.out.print("Do you want to see the XML document created? (Y/N): ");
+			if(in.nextLine().charAt(0) == 'Y');
+				outputter.output(doc, System.out);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		System.out.println("\nNow the program will transmit the XML file to another computer, which will deserialize it.");
 		
 		System.out.print("Enter the destination IP: ");
 		String IP = in.nextLine();
@@ -67,6 +80,10 @@ public class ObjectCreator {
 		int port = in.nextInt();
 		
 		Client.sendDocument(IP, port, stream.toByteArray());
+		
+		System.out.println("This is an inspection of the object you sent. Use it to compare on to the deserialized object on the receiving side.");
+		
+		(new Inspector()).inspect(selection, true);
 	}
 	
 	private static SimpleObject createSimpleObject()

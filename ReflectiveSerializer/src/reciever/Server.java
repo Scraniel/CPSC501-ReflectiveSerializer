@@ -10,6 +10,8 @@ import org.jdom2.Document;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
+import objectInspector.Inspector;
+
 public class Server {
 	
 	public static void main(String[] args)
@@ -41,7 +43,8 @@ public class Server {
 		    	Document document = builder.build(inputStream);
 		    	System.out.println("Deserializing object...");
 		    	Object obj = deserializer.deserialize(document);
-		    	System.out.println("Object deserialized! It looks like this:\n\n" + obj + "\n");
+		    	System.out.println("Object deserialized! It looks like this:\n\n");
+		    	(new Inspector()).inspect(obj, true);
 		      
 		    	socket.close();
 		      
