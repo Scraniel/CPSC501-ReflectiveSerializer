@@ -7,6 +7,15 @@ public class SimpleObject {
 	private char charField;
 	private boolean booleanField;
 	
+	public SimpleObject()
+	{
+		intField = -1;
+		doubleField = -1;
+		charField = ' ';
+		booleanField = false;
+		
+	}
+	
 	public SimpleObject(int intField, double doubleField, char charField, boolean booleanField)
 	{
 		this.intField = intField;

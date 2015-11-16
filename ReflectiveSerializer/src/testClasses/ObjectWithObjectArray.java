@@ -3,6 +3,11 @@ package testClasses;
 public class ObjectWithObjectArray {
 	private SimpleObject[] array;
 	
+	public ObjectWithObjectArray()
+	{
+		array = null;
+	}
+	
 	public ObjectWithObjectArray(SimpleObject[] array)
 	{
 		this.array = array;

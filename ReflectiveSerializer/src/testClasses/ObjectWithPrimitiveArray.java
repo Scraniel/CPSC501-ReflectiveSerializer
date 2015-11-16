@@ -4,6 +4,11 @@ public class ObjectWithPrimitiveArray {
 
 	private int[] array;
 	
+	public ObjectWithPrimitiveArray()
+	{
+		array = null;
+	}
+	
 	public ObjectWithPrimitiveArray(int[] array)
 	{
 		this.array = array;

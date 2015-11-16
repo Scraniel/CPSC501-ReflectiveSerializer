@@ -2,8 +2,14 @@ package testClasses;
 
 public class CircularNode {
 
-	private int identifier;
+	public int identifier;
 	public CircularNode next;
+	
+	public CircularNode()
+	{
+		identifier = -1;
+		next = null;
+	}
 	
 	public CircularNode(int value)
 	{
@@ -12,6 +18,6 @@ public class CircularNode {
 	
 	public String toString()
 	{
-		return "Identifier:" + identifier; 
+		return "Chain:" + identifier + "->" + next.identifier + "->" + next.next.identifier + "->" + next.next.next.identifier; 
 	}
 }

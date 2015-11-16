@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class ObjectWithCollection {
 	private ArrayList<SimpleObject> list;
 	
+	public ObjectWithCollection()
+	{
+		list = null;
+	}
+	
 	public ObjectWithCollection(ArrayList<SimpleObject> list)
 	{
 		this.list = list;

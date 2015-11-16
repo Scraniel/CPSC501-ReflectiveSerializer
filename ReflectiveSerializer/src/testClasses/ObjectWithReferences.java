@@ -4,6 +4,13 @@ public class ObjectWithReferences {
 
 	private SimpleObject firstField, secondField, thirdField;
 	
+	public ObjectWithReferences()
+	{
+		firstField = null;
+		secondField = null;
+		thirdField = null;
+	}
+	
 	public ObjectWithReferences(SimpleObject firstField, SimpleObject secondField, SimpleObject thirdField)
 	{
 		this.firstField = firstField;

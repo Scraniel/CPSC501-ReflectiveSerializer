@@ -15,6 +15,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import testClasses.*;
+import reciever.*;
 
 public class Serializer implements ReflectiveSerializer {
 
@@ -63,7 +64,11 @@ public class Serializer implements ReflectiveSerializer {
 		// Primitive array
 		ObjectWithPrimitiveArray pArray = new ObjectWithPrimitiveArray(new int[]{1,2,3,4,5});
 		
+		// with collection
 		ObjectWithCollection col = new ObjectWithCollection(list);
+		
+		// object array
+		ObjectWithObjectArray oArray = new ObjectWithObjectArray(new SimpleObject[]{first, second, third});
 		
 		Document doc = serializer.serialize(pArray);
 		outputter.setFormat(Format.getPrettyFormat());
@@ -73,6 +78,10 @@ public class Serializer implements ReflectiveSerializer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Deserializer deserializer = new Deserializer();
+		Object deserialized = deserializer.deserialize(doc);
+		System.out.println(deserialized);
 	}
 	
 	@Override
@@ -225,7 +234,7 @@ public class Serializer implements ReflectiveSerializer {
 					else
 					{
 						elementRefID = getID();
-						Element toAdd = serializeObject(instance, id);
+						Element toAdd = serializeObject(elementInstance, elementRefID);
 						if(toAdd != null)
 							elementsToAdd.add(toAdd);
 					}

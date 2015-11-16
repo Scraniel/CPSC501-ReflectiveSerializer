@@ -1,5 +1,6 @@
 package sender;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,8 +23,8 @@ public class ObjectCreator {
 				+ "1. A simple object with primitive fields\n"
 				+ "2. An object with fields that contain object references\n"
 				+ "3. An object with fields that contain circular object references (ie. objects connected in a graph)\n"
-				+ "4. An objct with a reference to an array of primitives\n"
-				+ "5. An object with a references to an array of object references\n"
+				+ "4. An object with a reference to an array of primitives\n"
+				+ "5. An object with a reference to an array of object references\n"
 				+ "Selection:  ");
 		
 		Object selection = null;
@@ -53,12 +54,19 @@ public class ObjectCreator {
 		// HERE'S WHERE YOU ADD THE NETWORK CONNECTION / OUTPUT
 		XMLOutputter outputter = new XMLOutputter();
 		outputter.setFormat(Format.getPrettyFormat());
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		try {
-			outputter.output(doc, System.out);
+			outputter.output(doc, stream);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.print("Enter the destination IP: ");
+		String IP = in.nextLine();
+		System.out.print("\nEnter the listening port: ");
+		int port = in.nextInt();
+		
+		Client.sendDocument(IP, port, stream.toByteArray());
 	}
 	
 	private static SimpleObject createSimpleObject()
